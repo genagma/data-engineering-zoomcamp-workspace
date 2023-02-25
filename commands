@@ -1,0 +1,263 @@
+# Conda create environment with yaml file
+conda env create -f environment.yml
+
+# Conda remove environment
+conda env remove --name myenv
+
+# Docker help
+docker --help
+
+# command to get help on the "docker build" command
+docker build --help # --iidfile string          Write the image ID to the file
+
+# Run docker with the python:3.9 image in an iterative mode
+docker run -it python:3.9
+
+# Run docker with the python:3.9 image in an iterative mode and the entrypoint of bash
+docker run -it --entrypoint=bash python:3.9
+# pip list
+# Package    Version
+# ---------- -------
+# pip        22.0.4
+# setuptools 58.1.0
+# wheel      0.38.4
+
+
+# Create a docker image through Dockerfile 
+# The point (.) indicate build the image into directory
+docker build -t taxi_ingest:v001 .
+
+docker image build -t dockerid/prefect:dez .
+
+# Docker login to Docker hub registry
+docker login -u dockerid
+
+# Push image to Docker hub
+docker image push dockerid/prefect:dez
+
+# Run Postgres image with Docker
+docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_DB="ny_taxy" \
+    -v $(pwd)/ny_taxi_postgre_data:/var/lib/postgresql/data \
+    -p 5432:5432 \
+ postgres:13
+
+# Connect to Postgres Database with command line utility pgcli
+pgcli -h localhost -p 5432 -u root -d ny_taxy
+
+CREATE TABLE "yellow_taxi_data" (
+"VendorID" REAL,
+  "tpep_pickup_datetime" TIMESTAMP,
+  "tpep_dropoff_datetime" TIMESTAMP,
+  "passenger_count" REAL,
+  "trip_distance" REAL,
+  "RatecodeID" REAL,
+  "store_and_fwd_flag" TEXT,
+  "PULocationID" INTEGER,
+  "DOLocationID" INTEGER,
+  "payment_type" REAL,
+  "fare_amount" REAL,
+  "extra" REAL,
+  "mta_tax" REAL,
+  "tip_amount" REAL,
+  "tolls_amount" REAL,
+  "improvement_surcharge" REAL,
+  "total_amount" REAL,
+  "congestion_surcharge" REAL
+)
+
+
+# Run PgAdmin image with Docker
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+ dpage/pgadmin4
+
+# Create a network to communicate two containers
+ docker network create pg-network
+
+ docker run -it \
+    -e POSTGRES_USER="root" \
+    -e POSTGRES_PASSWORD="root" \
+    -e POSTGRES_DB="ny_taxy" \
+    -v $(pwd)/ny_taxi_postgre_data:/var/lib/postgresql/data \
+    -p 5432:5432 \antaresgen
+    --network=pg-network \
+    --name pg-database \
+  postgres:13
+
+docker run -it \
+    -e PGADMIN_DEFAULT_EMAIL="admin@admin.com" \
+    -e PGADMIN_DEFAULT_PASSWORD="root" \
+    -p 8080:80 \
+    --network=pg-network \
+    --name pgadmin \
+  dpage/pgadmin4
+
+# Start the container already created
+docker start CONTAINER_ID
+
+# Stop container
+docker stop CONTAINER_ID
+
+ # Convert Jupyter notebook to Python script
+ jupyter nbconvert --to=script upload-data.ipynb
+
+ # Execute Python script
+python ingest_data.py \
+  --user=root \
+  --password=root \
+  --host=localhost \
+  --port=5432 \
+  --db=ny_taxy \
+  --table_name=yellow_taxi_data \
+  --url=https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz
+
+# Read csv.gz file with Pandas
+df = pd.read_csv('sample.tar.gz', compression='gzip', header=0, sep=',', quotechar='"', on_bad_lines='skip')
+
+# Run Docker image that execute Python script
+docker run -it \
+  --network=pg-network \
+  taxi_ingest:v001 \
+    --user=root \
+    --password=root \
+    --host=pg-database \
+    --port=5432 \
+    --db=ny_taxy \
+    --table_name=yellow_taxi_data \
+    --url=https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/yellow_tripdata_2021-01.csv.gz
+
+# Run docker-compose with various services using yaml file
+docker compose up
+docker compose up -d #deatached mode permit use the console
+
+# Stop docker-compose with various services
+docker compose down
+
+# Generate ssh keys for github
+ssh-keygen -t ed25519 -C "anta@com"
+
+# Add keys to SSH agent
+ssh-add ~/.ssh/id_key
+
+# Change your remote's URL from HTTPS to SSH
+git remote set-url origin git@github.com:genagma/data-engineering-zoomcamp.git
+
+# Start Prefect server UI
+prefect orion start
+
+# List backgroud process
+jobs
+
+# bring background process to foreground fg %numba
+
+# register blocks for GCP in  prefect
+prefect block register -m prefect_gcp
+
+# query the system clock
+timedatectl
+
+# Edit crontab file
+crontab -e
+
+# List all tasks in the crontab
+crontab -l
+
+# deployment with prefect - define
+prefect deployment build ./parameterized_flow.py:etl_parent_flow -n "Parameterized ETL"
+
+# deployment with prefect - load, create
+prefect deployment apply etl_parent_flow-deployment.yaml
+
+# deployment with prefect - start agent to run flows
+prefect agent start  --work-queue "default"
+prefect agent start -q default
+
+# deployment with prefect - run a flow
+prefect deployment run etl-parent-flow/docker-flow
+
+# deployment with prefect - define with schedule (-a means appy too)
+prefect deployment build ./parameterized_flow.py:etl_parent_flow -n "Parameterized ETL with schedule" --cron "0 0 * * *" -a
+
+# deployment with prefect - Get information
+prefect deployment build --help
+
+# get the profile used
+prefect profile ls
+
+
+# view settings from the cli
+prefect config view
+
+# using a local Prefect Orion API server instance.
+prefect config set PREFECT_API_URL="http://127.0.0.1:4200/api"
+
+# Prefect cloud
+# install prefect and login in your terminal
+pip install -U prefect
+prefect cloud login
+
+# use Prefect Cloud
+prefect config set PREFECT_API_URL="https://api.prefect.cloud/api/accounts/[ACCOUNT-ID]/workspaces/[WORKSPACE-ID]"
+
+# Big Query Machine Learning Deployment
+
+# Login to GCP
+gcloud auth login
+
+# Export the model to the GCS
+bq --project_id dez-20230113 extract -m nytaxi.tip_model gs://dez_data_lake_dez-20230113/tip_model
+
+# Create a temoral directory to copy the model from GCS to Local file system
+mkdir /tmp/model
+
+# Copy model from GCS to Local file system
+gsutil cp -r gs://dez_data_lake_dez-20230113/tip_model /tmp/model
+
+# Create directory to serve the model
+mkdir -p ../model/serving_dir/tip_model/1
+
+# Copy model to serving directory
+cp -r /tmp/model/tip_model/* ../model/serving_dir/tip_model/1
+
+# Download Docker image to deploy machine learning model
+docker pull tensorflow/serving
+
+# Run container image to deploy model
+docker run -p 8501:8501 --mount type=bind,source=`pwd`/../model/serving_dir/tip_model,target=/models/tip_model -e MODEL_NAME=tip_model -t tensorflow/serving &
+
+# Test the model
+curl -d '{"instances": [{"passenger_count":1, "trip_distance":12.2, "PULocationID":"193", "DOLocationID":"264", "payment_type":"2","fare_amount":20.4,"tolls_amount":0.0}]}' -X POST http://localhost:8501/v1/models/tip_model:predict
+
+http://localhost:8501/v1/models/tip_model
+
+# dbt
+
+# Init dbt project
+dbt init
+
+# test database connection
+dbt debug
+
+# create table/view from seeds
+dbt seed
+
+# create all models
+dbt run
+
+# creat all models, seeds and execute test
+dbt build
+
+# create all dependencies's model
+dbt build --select +model.sql
+
+# run all test defined in the schema.yml file
+dbt test
+# Build model passing a variable
+dbt build --select stg_green_tripdata.sql --var 'is_test_run: false'
+dbt build --select stg_yellow_tripdata.sql --var 'is_test_run: false'
+
