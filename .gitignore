@@ -20,6 +20,7 @@ serving_dir
 *.parquet
 .ipynb_checkpoints/
 !week_6_stream_processing/avro_example/data/rides.csv
+**/data/*
 **/video/*
 **/audio/*
 **sld.txt
