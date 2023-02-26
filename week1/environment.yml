@@ -20,3 +20,5 @@ dependencies:
     - dbt-core
     - dbt-bigquery
     - dbt-postgres
+    - pyspark
+    - parquet-tools

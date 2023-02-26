@@ -261,3 +261,8 @@ dbt test
 dbt build --select stg_green_tripdata.sql --var 'is_test_run: false'
 dbt build --select stg_yellow_tripdata.sql --var 'is_test_run: false'
 
+# read parquet file from command line
+!parquet-tools csv --head 1001 fhvhv_tripdata_2021-01.parquet > head.csv
+
+# read a compressed csv file from command line
+!zcat -f fhvhv_tripdata_2021-01.csv.gz | head -n 1001 > head.csv # TODO investigate broken pipe 
