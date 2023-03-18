@@ -4,6 +4,9 @@ conda env create -f environment.yml
 # Conda remove environment
 conda env remove --name myenv
 
+# List all package installed in specific environment
+conda list -n myenv
+
 # Docker help
 docker --help
 

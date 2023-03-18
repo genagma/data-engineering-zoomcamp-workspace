@@ -1,0 +1,11 @@
+name: dezsp
+dependencies:
+  - python=3.9
+  - pip
+  - pip:
+    - kafka-python==1.4.6
+    - confluent_kafka
+    - requests
+    - avro
+    - faust
+    - fastavro
