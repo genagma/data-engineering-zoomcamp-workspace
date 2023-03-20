@@ -22,3 +22,4 @@ dependencies:
     - dbt-postgres
     - pyspark
     - parquet-tools
+    - piperider[bigquery]
