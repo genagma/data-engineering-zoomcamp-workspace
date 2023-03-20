@@ -22,7 +22,8 @@ init_url = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download'
 BUCKET = os.environ.get("GCP_GCS_BUCKET", "dez_data_lake_dez-20230113")
 
 # Relative data directory path
-relative_data_directory = '../../data'
+#relative_data_directory = '../../data'
+relative_data_directory = '/mnt/DSCRGS/proyectos/datos/taxi_trips_ny'
 
 table_schema_green = pa.schema(
     [
@@ -156,7 +157,7 @@ def web_to_gcs(year, service):
         # download it using requests via a pandas df
         print(init_url_service + file_name)
         request_url = init_url_service + file_name
-        output_file = f"{relative_data_directory}/{file_name}"
+        output_file = f"{relative_data_directory}/{service}/{file_name}"
         print(output_file)
         # Download the csv
         #os.system(f'wget {request_url} -O {output_file}')
@@ -168,13 +169,14 @@ def web_to_gcs(year, service):
         #parquetized = format_to_parquet(output_file, service, year)
 
         # upload it to gcs 
-        upload_to_gcs(BUCKET, f"data/{service}/{file_name}", output_file) #file_name)
+        #upload_to_gcs(BUCKET, f"data/{service}/{file_name}", file_name)
+        upload_to_gcs(BUCKET, f"data/{service}/{file_name.replace('.csv.gz', '.parquet')}", output_file.replace('.csv.gz', '.parquet'))
         print(f"GCS: data/{service}/{file_name}")
 
 
-#web_to_gcs('2019', 'green')
-#web_to_gcs('2020', 'green')
-#web_to_gcs('2019', 'yellow')
-#web_to_gcs('2020', 'yellow')
+web_to_gcs('2019', 'green')
+web_to_gcs('2020', 'green')
+web_to_gcs('2019', 'yellow')
+web_to_gcs('2020', 'yellow')
 web_to_gcs('2019', 'fhv')
 #web_to_gcs('2020', 'fhv')
