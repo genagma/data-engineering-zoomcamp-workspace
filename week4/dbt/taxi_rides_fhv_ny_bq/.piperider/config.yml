@@ -1,4 +1,16 @@
-dataSources: []
+dataSources:
+- name: fhv_dev
+  type: bigquery
+  dbt:
+    profile: default
+    target: dev
+    projectDir: .
+- name: fhv_prod
+  type: bigquery
+  dbt:
+    profile: default
+    target: prod
+    projectDir: .
 dbt:
   projectDir: .
   # tag: 'piperider'

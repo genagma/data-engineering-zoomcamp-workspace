@@ -3,7 +3,7 @@ base:
   dbt:
     commands:
     - dbt deps
-    - dbt build --target prod
+    - dbt build
   piperider:
     command: piperider run
 target:
@@ -11,6 +11,6 @@ target:
   dbt:
     commands:
     - dbt deps
-    - dbt build --target dev
+    - dbt build
   piperider:
     command: piperider run
