@@ -3,14 +3,11 @@ base:
   dbt:
     commands:
     - dbt deps
-    - dbt build
+    - dbt build --target prod
   piperider:
     command: piperider run
 target:
-<<<<<<< HEAD
   branch: data-modeling
-=======
->>>>>>> f3543432a7c8675151b41a10046d7a465a0dacf2
   dbt:
     commands:
     - dbt deps
