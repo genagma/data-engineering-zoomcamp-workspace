@@ -10,4 +10,8 @@ profiler:
 #     duplicateRows: false
 
 telemetry:
+<<<<<<< HEAD
   id: 99b9de41392f4604b90862a535ef4f43
+=======
+  id: 837e57aba4d444348b35a2e096e660cf
+>>>>>>> f3543432a7c8675151b41a10046d7a465a0dacf2
